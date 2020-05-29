@@ -1,0 +1,94 @@
+.App {
+  text-align: center;
+  margin: 2rem;
+}
+
+.section {
+  text-align: left;
+  max-width: 720px;
+  margin: 4rem auto auto;
+}
+
+.collection-container {
+  display: flex;
+  flex-flow: row wrap;
+}
+
+.token-container {
+  display: inline-block;
+  height: 344px;
+  margin: 20px;
+  padding: 10px;
+  background-color: #E9ECEF;
+  border-radius: 5px;
+}
+
+.artwork-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 300px;
+  height: 300px;
+}
+
+.artwork {
+  max-height: 300px;
+  max-width: 300px;
+}
+
+.button {
+  width: 120px;
+}
+
+.uploader {
+  margin: 0 auto;
+  max-width: 500px;
+}
+
+.steps {
+  margin: 20px 0;
+}
+.collection-title {
+  color: white;
+}
+
+.title {
+  color: white;
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
+.subtitle, .subtitle > a, .subtitle > a:hover {
+  color: white;
+  margin-bottom: 10px;
+}
+
+.add-nft-title {
+  margin-top: 40px;
+}
+
+.colleciton-subtitle {
+  color: #ffffff;
+}
+
+.no-artwork {
+  margin-top: 20px;
+}
+
+.loading-text {
+  font-size: 30px;
+  margin: 0 auto;
+}
+
+.loading-jumbo {
+  width: 600px;
+  margin: 100px auto;
+}
+
+.loading-image {
+  display: flex;
+  width: 300px;
+  height: 300px;
+  justify-content: center;
+  align-items: center;
+}
