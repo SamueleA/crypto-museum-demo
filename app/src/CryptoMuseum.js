@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 import { Spinner, Button, Jumbotron } from 'react-bootstrap';
-import AWS from 'aws-sdk';
+import fleekStorage from '@fleekhq/fleek-storage-js';
 import { newContextComponents } from "@drizzle/react-components";
 import ImageUploader from "react-images-upload";
 
@@ -24,7 +24,7 @@ export default ({ drizzle, drizzleState }) => {
   };
 
   const createNFTTransaction = async (hash) => {
-    const tokenURI = `https://gateway.temporal.cloud/ipfs/${hash}`;
+    const tokenURI = `https://ipfs.io/ipfs/${hash}`;
 
     const removeFromQueue = () => {
       const newTxQueue = txQueue.filter((uri) => uri !== tokenURI);
@@ -44,36 +44,19 @@ export default ({ drizzle, drizzleState }) => {
   const handleButtonClick = async (newTokenId) => {
     setLoading(true)
     try {
-      const bucket = "agostinelli-team-bucket";
-
-      const s3 = new AWS.S3({
-        apiVersion: '2006-03-01',
-        accessKeyId: 'ACCESS_KEY_ID',
-        secretAccessKey: 'SECRET_ACCESS_KEY',
-        endpoint: 'https://storageapi.fleek.co',
-        region: 'us-east-1',
-        s3ForcePathStyle: true
-      });
-  
       const date = new Date();
       const timestamp = date.getTime();
 
-      const params = {
-        Bucket: bucket,
-        Key: `nft/${newTokenId}-${timestamp}`,
-        ContentType: artwork.type,
-        Body: artwork,
-        ACL: 'public-read',
-      };
+      const { hash } = await fleekStorage.upload({
+        apiKey: 'API_KEY',
+        apiSecret: 'API_SECRET',
+        key: `nft/${newTokenId}-${timestamp}`,
+        data: artwork,
+      });
 
-      const request = s3.putObject(params);
-
-      request.on('httpHeaders', (statusCode, headers) => {
-        setLoading(false);
-        clearPreview();
-        const ipfsHash = headers['x-fleek-ipfs-hash'];
-        createNFTTransaction(ipfsHash)
-      }).send();
+      setLoading(false);
+      clearPreview();
+      createNFTTransaction(hash)
     } catch(e) {
       console.error(e);
       setLoading(false);
@@ -92,7 +75,7 @@ export default ({ drizzle, drizzleState }) => {
           methodArgs={[tokenId]}
           render={(cid) =>  (
             <div className="artwork-container">
-              <img className="artwork" src={`https://gateway.temporal.cloud/ipfs/${cid}`} />
+              <img className="artwork" src={`https://ipfs.fleek.co/ipfs/${cid}`} />
             </div>
           )}
         />
