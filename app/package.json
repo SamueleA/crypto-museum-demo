@@ -12,7 +12,7 @@
     "react-bootstrap": "^1.0.1",
     "react-dom": "^16.11.0",
     "react-images-upload": "^1.2.8",
-    "react-scripts": "3.2.0"
+    "react-scripts": "5.0.1"
   },
   "scripts": {
     "start": "react-scripts start",
